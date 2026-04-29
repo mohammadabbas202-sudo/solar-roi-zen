@@ -6,55 +6,60 @@
 
 @layer base {
   :root {
-    /* Core palette */
-    --background: 0 0% 100%;            /* Crisp white */
-    --foreground: 222 47% 11%;          /* Deep navy text */
+    /* Core palette — Premium Midnight & Solar Glow */
+    --background: 0 0% 100%;
+    --foreground: 224 71% 4%;
 
-    --navy: 222 47% 11%;                /* #0F172A Deep Navy */
+    --navy: 224 71% 4%;                /* #020617 Deep Midnight Indigo */
     --navy-foreground: 210 40% 98%;
-    --slate: 215 19% 35%;               /* slate-600-ish */
+    --slate: 215 19% 35%;
     --slate-light: 215 16% 65%;
-    --surface: 210 40% 98%;             /* off-white surfaces */
+    --surface: 210 40% 98%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 224 71% 4%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 224 71% 4%;
 
-    --primary: 222 47% 11%;             /* Navy primary */
+    --primary: 224 71% 4%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary-foreground: 224 71% 4%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
 
     --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
+    --accent-foreground: 224 71% 4%;
 
-    /* CTA — Vibrant Orange #F97316 */
-    --cta: 21 90% 53%;
-    --cta-foreground: 0 0% 100%;
-    --cta-hover: 21 90% 47%;
+    /* CTA — Vibrant Solar Glow Gradient-ready Amber */
+    --cta: 38 92% 50%;
+    --cta-foreground: 224 71% 4%;
+    --cta-hover: 38 92% 45%;
 
-    --success: 142 71% 45%;
+    --success: 158 64% 52%;            /* Emerald Trust */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 215 28% 90%;
     --input: 215 28% 90%;
-    --ring: 21 90% 53%;
+    --ring: 38 92% 50%;
 
-    --radius: 0.875rem;
+    --radius: 1rem;
 
-    /* Effects */
-    --shadow-card: 0 1px 2px 0 hsl(222 47% 11% / 0.04), 0 8px 24px -12px hsl(222 47% 11% / 0.12);
-    --shadow-cta: 0 8px 20px -8px hsl(var(--cta) / 0.55);
-    --shadow-elevated: 0 20px 40px -20px hsl(222 47% 11% / 0.25);
-    --gradient-navy: linear-gradient(180deg, hsl(222 47% 11%) 0%, hsl(222 47% 14%) 100%);
-    --gradient-radial-glow: radial-gradient(ellipse 80% 60% at 50% 0%, hsl(21 90% 53% / 0.10), transparent 70%);
+    /* Effects — Multi-layered Depth */
+    --shadow-card: 0 1px 3px 0 hsl(224 71% 4% / 0.02), 0 12px 24px -12px hsl(224 71% 4% / 0.08);
+    --shadow-cta: 0 10px 25px -5px hsl(var(--cta) / 0.4);
+    --shadow-elevated: 
+      0 2px 4px 0 hsl(224 71% 4% / 0.04),
+      0 12px 24px 0 hsl(224 71% 4% / 0.08),
+      0 24px 48px -12px hsl(224 71% 4% / 0.12);
+    
+    --gradient-navy: linear-gradient(180deg, hsl(224 71% 4%) 0%, hsl(224 64% 8%) 100%);
+    --gradient-solar: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(45 92% 50%) 100%);
+    --gradient-radial-glow: radial-gradient(ellipse 80% 60% at 50% 0%, hsl(38 92% 50% / 0.12), transparent 70%);
   }
 }
 
@@ -65,7 +70,11 @@
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
   }
-  ::selection { background: hsl(var(--cta) / 0.25); }
+  ::selection { background: hsl(var(--cta) / 0.3); }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
 }
 
 @layer utilities {
@@ -73,21 +82,44 @@
   .bg-navy { background-color: hsl(var(--navy)); }
   .text-navy { color: hsl(var(--navy)); }
   .bg-surface { background-color: hsl(var(--surface)); }
+  
+  .bg-solar-glow {
+    background: var(--gradient-solar);
+  }
 
   .cta-glow {
     box-shadow: var(--shadow-cta);
   }
 
-  .hairline {
-    border: 1px solid hsl(var(--border));
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-navy/40 backdrop-blur-xl border border-white/10;
+  }
+
+  .noise-overlay {
+    position: relative;
+  }
+  .noise-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    pointer-events: none;
+    z-index: 50;
   }
 
   /* Subtle grid backdrop for hero */
   .bg-grid {
     background-image:
-      linear-gradient(hsl(var(--border) / 0.7) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--border) / 0.7) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black 30%, transparent 80%);
+      linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black 20%, transparent 80%);
   }
 }

@@ -60,27 +60,29 @@ export function LiveFeed() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.96 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-3 rounded-xl bg-card border border-border shadow-elevated pl-3 pr-2 py-3 max-w-[320px]"
+            className="flex items-center gap-4 rounded-2xl glass-panel shadow-elevated pl-3.5 pr-2.5 py-3.5 max-w-[340px]"
           >
-            <span className="grid h-9 w-9 place-items-center rounded-lg bg-success/10 text-success shrink-0">
-              <TrendingUp className="h-4 w-4" />
-            </span>
+            <div className="relative">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-success/10 text-success shrink-0">
+                <TrendingUp className="h-5 w-5" />
+              </span>
+              <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-success border-2 border-white animate-pulse" />
+            </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm text-navy leading-snug">
-                Someone in <span className="font-semibold">{notice.city}</span> just saved{" "}
-                <span className="font-semibold">${notice.amount.toLocaleString()}/year</span>
+              <p className="text-sm text-navy leading-tight font-medium">
+                New Savings in <span className="text-success font-bold">{notice.city}</span>:{" "}
+                <span className="font-bold underline decoration-success/30 decoration-2 underline-offset-2">${notice.amount.toLocaleString()}/yr</span>
               </p>
-              <p className="text-[11px] text-slate-light mt-0.5 flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse-dot" />
-                Live · just now
+              <p className="text-[10px] text-slate font-bold uppercase tracking-widest mt-1.5 flex items-center gap-1.5 opacity-60">
+                Verified ROI · Just Now
               </p>
             </div>
             <button
               onClick={() => setDismissed(true)}
               aria-label="Dismiss"
-              className="grid h-7 w-7 place-items-center rounded-md text-slate-light hover:text-navy hover:bg-muted transition-colors shrink-0"
+              className="grid h-8 w-8 place-items-center rounded-lg text-slate/40 hover:text-navy hover:bg-navy/5 transition-all shrink-0"
             >
-              <X className="h-3.5 w-3.5" />
+              <X className="h-4 w-4" />
             </button>
           </motion.div>
         )}

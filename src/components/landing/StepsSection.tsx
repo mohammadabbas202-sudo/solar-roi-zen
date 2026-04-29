@@ -24,45 +24,45 @@ const steps = [
 
 export function StepsSection() {
   return (
-    <section id="how" className="py-20 sm:py-28">
+    <section id="how" className="py-32 sm:py-40 bg-white">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-15%" }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-2xl text-center mb-14"
+          transition={{ duration: 0.8 }}
+          className="mx-auto max-w-2xl text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase text-cta mb-4">
-            The Process
+          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-cta mb-6">
+            Our Protocol
           </div>
-          <h2 className="font-display text-4xl sm:text-5xl text-navy text-balance leading-[1.05]">
-            Three steps to <span className="italic text-slate">ownership.</span>
+          <h2 className="text-5xl sm:text-6xl text-navy text-balance leading-[1.02]">
+            Three steps to energy <span className="italic font-light text-slate">ownership.</span>
           </h2>
         </motion.div>
 
-        <div className="grid gap-5 md:grid-cols-3 max-w-5xl mx-auto">
+        <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
           {steps.map((s, i) => (
             <motion.div
               key={s.n}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative rounded-2xl border border-border bg-card p-7 shadow-card hover:shadow-elevated transition-shadow"
+              transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="group relative rounded-3xl border border-border bg-white p-8 sm:p-10 shadow-card hover:shadow-elevated transition-all duration-500 hover:-translate-y-1"
             >
-              <div className="flex items-center justify-between mb-7">
-                <span className="grid h-12 w-12 place-items-center rounded-xl bg-navy text-navy-foreground">
-                  <s.icon className="h-5 w-5" strokeWidth={2} />
+              <div className="flex items-center justify-between mb-10">
+                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-navy text-white shadow-lg shadow-navy/20">
+                  <s.icon className="h-6 w-6" strokeWidth={1.5} />
                 </span>
-                <span className="font-mono text-sm font-semibold text-slate-light tracking-widest">
+                <span className="font-display text-4xl italic text-slate-light/20 group-hover:text-cta/40 transition-colors duration-500">
                   {s.n}
                 </span>
               </div>
-              <h3 className="font-display text-2xl text-navy mb-2 leading-tight">
+              <h3 className="text-2xl text-navy mb-4 font-display italic">
                 {s.title}
               </h3>
-              <p className="text-slate leading-relaxed">{s.body}</p>
+              <p className="text-slate text-lg leading-relaxed font-light">{s.body}</p>
             </motion.div>
           ))}
         </div>
