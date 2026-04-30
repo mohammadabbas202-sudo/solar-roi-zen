@@ -24,20 +24,20 @@ const steps = [
 
 export function StepsSection() {
   return (
-    <section id="how" className="py-32 sm:py-40 bg-white">
+    <section id="how" className="py-28 sm:py-36 bg-white">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-15%" }}
           transition={{ duration: 0.8 }}
-          className="mx-auto max-w-2xl text-center mb-20"
+          className="mx-auto max-w-2xl text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-cta mb-6">
-            Our Protocol
+          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.16em] uppercase text-navy mb-6">
+            How it works
           </div>
-          <h2 className="text-5xl sm:text-6xl text-navy text-balance leading-[1.02]">
-            Three steps to energy <span className="italic font-light text-slate">ownership.</span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl text-navy text-balance leading-[1.05]">
+            Three steps to energy <span className="font-light text-slate">ownership.</span>
           </h2>
         </motion.div>
 
@@ -59,7 +59,7 @@ export function StepsSection() {
                   {s.n}
                 </span>
               </div>
-              <h3 className="text-2xl text-navy mb-4 font-display italic">
+              <h3 className="text-2xl text-navy mb-4 font-display">
                 {s.title}
               </h3>
               <p className="text-slate text-lg leading-relaxed font-light">{s.body}</p>

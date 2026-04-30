@@ -31,12 +31,12 @@ export function LiveFeed() {
   useEffect(() => {
     if (dismissed) return;
     let id = 1;
-    const initial = setTimeout(() => setNotice(pickNotice(id++)), 3000);
+    const initial = setTimeout(() => setNotice(pickNotice(id++)), 5000);
     const interval = setInterval(() => {
       if (paused) return;
       setNotice(null);
       setTimeout(() => setNotice(pickNotice(id++)), 350);
-    }, 9000);
+    }, 16000);
     return () => {
       clearTimeout(initial);
       clearInterval(interval);
@@ -47,10 +47,11 @@ export function LiveFeed() {
 
   return (
     <div
-      className="fixed bottom-24 left-4 z-40 hidden sm:block"
+      className="fixed bottom-28 left-4 z-30 hidden lg:block"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-live="polite"
+      aria-atomic="true"
     >
       <AnimatePresence mode="wait">
         {notice && (
@@ -70,11 +71,11 @@ export function LiveFeed() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm text-navy leading-tight font-medium">
-                New Savings in <span className="text-success font-bold">{notice.city}</span>:{" "}
+                Example Savings in <span className="text-success font-bold">{notice.city}</span>:{" "}
                 <span className="font-bold underline decoration-success/30 decoration-2 underline-offset-2">${notice.amount.toLocaleString()}/yr</span>
               </p>
-              <p className="text-[10px] text-slate font-bold uppercase tracking-widest mt-1.5 flex items-center gap-1.5 opacity-60">
-                Verified ROI · Just Now
+              <p className="text-xs text-slate font-semibold mt-1.5 flex items-center gap-1.5 opacity-70">
+                Simulated preview activity
               </p>
             </div>
             <button

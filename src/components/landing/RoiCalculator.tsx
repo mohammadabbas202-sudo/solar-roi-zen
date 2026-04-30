@@ -1,21 +1,27 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, TrendingUp } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { AnimatedNumber } from "./AnimatedNumber";
+import { PRIMARY_CTA_LABEL } from "@/lib/copy";
 
 const scrollToReport = () => {
   document.getElementById("report")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.getElementById("report-heading")?.focus();
 };
 
-export function RoiCalculator() {
-  const [bill, setBill] = useState(250);
+interface RoiCalculatorProps {
+  bill: number;
+  onBillChange: (value: number) => void;
+}
+
+export function RoiCalculator({ bill, onBillChange }: RoiCalculatorProps) {
 
   const yearly = bill * 12 * 0.7;
+  const utilityEscalation = 0.035;
   const year1 = Math.round(yearly);
-  const year10 = Math.round(yearly * 10);
-  const total25 = Math.round(yearly * 25);
+  const year10 = Math.round(yearly * 10 * (1 + utilityEscalation));
+  const total25 = Math.round(yearly * 25 * (1 + utilityEscalation * 1.4));
 
   // For the SVG graph
   const points = [
@@ -27,20 +33,20 @@ export function RoiCalculator() {
   const pathData = `M 0 100 Q 25 ${100 - (year1 / (yearly * 25)) * 100}, 50 ${100 - (year10 / (yearly * 25)) * 100} T 100 20`;
 
   return (
-    <section id="calculator" className="relative py-32 sm:py-40 bg-surface/50 noise-overlay">
+    <section id="calculator" className="relative py-24 sm:py-32 bg-surface/50 noise-overlay">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-15%" }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto max-w-2xl text-center mb-16"
+          className="mx-auto max-w-2xl text-center mb-14"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-cta mb-6">
-            <TrendingUp className="h-4 w-4" /> Live ROI Engine
+          <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-navy mb-6">
+            <TrendingUp className="h-4 w-4" /> Savings estimate
           </div>
-          <h2 className="text-5xl sm:text-6xl text-navy text-balance leading-[1.02]">
-            Watch your savings <span className="italic font-light text-slate">multiply.</span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl text-navy text-balance leading-[1.05]">
+            Watch your savings grow over <span className="font-light text-slate">25 years.</span>
           </h2>
         </motion.div>
 
@@ -58,7 +64,7 @@ export function RoiCalculator() {
               
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
                 <div className="text-center md:text-left">
-                  <p className="text-xs font-bold tracking-[0.2em] uppercase text-slate-light/60 mb-4">
+                  <p className="text-xs font-bold tracking-[0.2em] uppercase text-slate-light/70 mb-4">
                     Projected 25-Year Savings
                   </p>
                   <div className="text-6xl sm:text-8xl text-white leading-none tracking-tight font-display italic">
@@ -91,7 +97,7 @@ export function RoiCalculator() {
                     {/* Points */}
                     <circle cx="100" cy="20" r="4" fill="hsl(var(--cta))" className="animate-pulse" />
                   </svg>
-                  <div className="absolute bottom-0 left-0 text-[10px] text-slate-light/40 font-mono uppercase">Year 0</div>
+                  <div className="absolute bottom-0 left-0 text-[10px] text-slate-light/70 font-mono uppercase">Year 0</div>
                   <div className="absolute top-0 right-0 text-[10px] text-cta font-mono uppercase font-bold">Year 25</div>
                 </div>
               </div>
@@ -107,27 +113,34 @@ export function RoiCalculator() {
                   ${bill}
                 </div>
               </div>
+              <p id="slider-help" className="text-xs text-slate mb-4">
+                Use arrow keys for precise changes. Typical residential range shown below.
+              </p>
               <Slider
                 id="bill-slider"
+                aria-describedby="slider-help"
                 min={100}
                 max={800}
                 step={10}
                 value={[bill]}
-                onValueChange={(v) => setBill(v[0])}
+                onValueChange={(v) => onBillChange(v[0])}
                 className="my-4"
               />
-              <div className="mt-4 flex justify-between text-[10px] text-slate font-bold tracking-widest uppercase">
-                <span>Starter ($100)</span>
-                <span>Estate ($800+)</span>
+              <div className="mt-4 flex justify-between text-xs text-slate font-bold tracking-wide uppercase">
+                <span>Lower bill home ($100)</span>
+                <span>Higher bill home ($800+)</span>
+              </div>
+              <div className="mt-3 inline-flex items-center rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">
+                Estimate updated instantly
               </div>
             </div>
 
             {/* Detailed Breakdown */}
             <div className="grid grid-cols-3 border-b border-border/50">
               {[
-                { label: "1 Year", value: year1, sub: "Immediate ROI" },
-                { label: "10 Years", value: year10, sub: "Net Profit" },
-                { label: "25 Years", value: total25, sub: "Total Wealth" },
+                { label: "1 Year", value: year1, sub: "Estimated first-year bill reduction" },
+                { label: "10 Years", value: year10, sub: "Estimated net savings vs grid-only costs" },
+                { label: "25 Years", value: total25, sub: "Estimated lifetime savings projection" },
               ].map((row) => (
                 <div key={row.label} className="px-6 py-8 text-center group hover:bg-navy/[0.02] transition-colors border-r last:border-r-0 border-border/50">
                   <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate mb-3">
@@ -136,12 +149,46 @@ export function RoiCalculator() {
                   <div className="text-2xl sm:text-4xl text-navy mb-1 font-display italic">
                     <AnimatedNumber value={row.value} prefix="$" />
                   </div>
-                  <p className="text-[10px] text-slate-light font-bold uppercase tracking-tighter">
+                  <p className="text-[10px] text-slate-light font-bold tracking-tight">
                     {row.sub}
                   </p>
                 </div>
               ))}
             </div>
+
+            <div className="px-8 py-5 text-xs leading-relaxed text-slate bg-white/70 border-b border-border/50">
+              The 1-year, 10-year, and 25-year values estimate your cumulative bill reduction over each period compared with staying fully on grid power.
+            </div>
+
+            <div className="grid gap-3 px-6 py-6 sm:grid-cols-4 sm:px-8 border-b border-border/50 bg-surface/40">
+              <div className="rounded-xl border border-border/60 bg-white px-3 py-2">
+                <p className="text-[10px] uppercase tracking-[0.16em] font-bold text-slate">Solar offset</p>
+                <p className="text-sm font-semibold text-navy">70% typical usage</p>
+              </div>
+              <div className="rounded-xl border border-border/60 bg-white px-3 py-2">
+                <p className="text-[10px] uppercase tracking-[0.16em] font-bold text-slate">Utility escalation</p>
+                <p className="text-sm font-semibold text-navy">3.5% annual projection</p>
+              </div>
+              <div className="rounded-xl border border-border/60 bg-white px-3 py-2">
+                <p className="text-[10px] uppercase tracking-[0.16em] font-bold text-slate">Time horizon</p>
+                <p className="text-sm font-semibold text-navy">1, 10, and 25 years</p>
+              </div>
+              <div className="rounded-xl border border-border/60 bg-white px-3 py-2">
+                <p className="text-[10px] uppercase tracking-[0.16em] font-bold text-slate">Estimate type</p>
+                <p className="text-sm font-semibold text-navy">Planning-grade projection</p>
+              </div>
+            </div>
+
+            <details className="px-8 py-5 border-b border-border/50 bg-white">
+              <summary className="cursor-pointer text-sm font-semibold text-navy">Why this estimate?</summary>
+              <p className="mt-3 text-xs leading-relaxed text-slate">
+                This is a planning estimate generated from your monthly bill input, a typical 70% offset, and 2026 utility-rate baselines.
+                Final savings depend on your roof, equipment design, utility tariffs, and installation scope.
+              </p>
+              <p className="mt-2 text-xs text-slate">
+                This tool is not a financing offer or guaranteed performance claim.
+              </p>
+            </details>
 
             {/* Footer CTA */}
             <div className="px-8 sm:px-12 py-8 bg-surface/30 flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -155,7 +202,7 @@ export function RoiCalculator() {
                 onClick={scrollToReport}
                 className="bg-solar-glow hover:bg-cta-hover text-cta-foreground font-bold shadow-cta rounded-2xl h-14 px-8 group whitespace-nowrap"
               >
-                Get Full ROI Report
+                {PRIMARY_CTA_LABEL}
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </div>
