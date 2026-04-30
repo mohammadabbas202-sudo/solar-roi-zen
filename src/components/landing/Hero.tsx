@@ -11,6 +11,22 @@ const scrollToReport = () => {
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-36 pb-20 sm:pt-48 sm:pb-28 noise-overlay">
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1600&q=80"
+        aria-hidden
+      >
+        <source
+          src="https://cdn.coverr.co/videos/coverr-solar-panels-on-a-rooftop-1579/1080p.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div className="absolute inset-0 bg-background/80 pointer-events-none" aria-hidden />
       <div className="absolute inset-0 bg-grid pointer-events-none opacity-60" aria-hidden />
       <div className="absolute inset-0 bg-gradient-radial-glow pointer-events-none" aria-hidden />
 
@@ -72,6 +88,19 @@ export function Hero() {
             <p className="mt-2 text-center text-xs text-slate">
               Metrics from internal reporting data (2024-2026). Certification references available upon request.
             </p>
+          </div>
+
+          <div className="mt-10 rounded-3xl overflow-hidden border border-border shadow-elevated">
+            <img
+              src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1600&q=80"
+              alt="Residential rooftop solar panels generating power at sunset"
+              loading="eager"
+              className="h-64 w-full object-cover sm:h-80"
+            />
+            <div className="bg-white px-5 py-3 text-left sm:flex sm:items-center sm:justify-between">
+              <p className="text-sm text-navy font-semibold">Built for real homes, not generic estimates.</p>
+              <p className="mt-1 text-xs text-slate sm:mt-0">Inputs include shading, usage, utility rates, and current incentives.</p>
+            </div>
           </div>
         </motion.div>
       </div>

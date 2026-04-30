@@ -66,6 +66,19 @@ export function StepsSection() {
             </motion.div>
           ))}
         </div>
+
+        <div className="mt-16 mx-auto max-w-5xl rounded-3xl overflow-hidden border border-border shadow-card">
+          <img
+            src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&w=1800&q=80"
+            alt="Solar panels installed across a neighborhood with clear skies"
+            loading="lazy"
+            className="h-64 w-full object-cover sm:h-80"
+          />
+          <div className="bg-surface/40 px-6 py-5 sm:flex sm:items-center sm:justify-between">
+            <p className="text-sm sm:text-base text-navy font-semibold">From roof scan to final design, every step is transparent.</p>
+            <p className="mt-2 text-xs sm:mt-0 text-slate">No pressure sales flow. Just clear assumptions and timelines.</p>
+          </div>
+        </div>
       </div>
     </section>
   );
